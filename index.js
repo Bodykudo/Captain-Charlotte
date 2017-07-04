@@ -17,7 +17,7 @@ fs.readdir('./commands/', (err, files) => {
   log(`Loading a total of ${files.length} commands.`);
   files.forEach(f => {
     let props = require(`./commands/${f}`);
-    log(`Loading Command: ${props.help.name}. 👌`);
+    log(`Loading Command: ${props.help.name}.`);
     client.commands.set(props.help.name, props);
     props.conf.aliases.forEach(alias => {
       client.aliases.set(alias, props.help.name);
@@ -57,16 +57,16 @@ client.elevation = message => {
 
 var regToken = /[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g;
 
-// client.on('debug', e => {
-//   console.log(chalk.bgBlue.green(e.replace(regToken, 'that was redacted')));
-// });
-//
-// client.on('warn', e => {
-//   console.log(chalk.bgYellow(e.replace(regToken, 'that was redacted')));
-// });
-//
-// client.on('error', e => {
-//   console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
-// });
+client.on('debug', e => {
+  console.log(chalk.bgBlue.green(e.replace(regToken, 'that was redacted')));
+});
+
+client.on('warn', e => {
+  console.log(chalk.bgYellow(e.replace(regToken, 'that was redacted')));
+});
+
+client.on('error', e => {
+  console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
+});
 
 client.login(settings.token);
